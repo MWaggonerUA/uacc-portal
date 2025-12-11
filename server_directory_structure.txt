@@ -1,0 +1,55 @@
+/home/ec2-user/
+├── apps/                           # Application code (Git repos live here)
+│   └── uacc-portal/                # Single modular app for all UACC tools
+│       ├── backend/                # API & core logic
+│       │   ├── api/                # Route handlers / endpoints
+│       │   ├── services/           # Business logic, data access, metrics calc
+│       │   ├── models/             # Pydantic/ORM models, schemas
+│       │   └── __init__.py
+│       │
+│       ├── frontend/               # UI layer: Dash/React/Vue/etc.
+│       │   ├── core/               # Shared layouts, components, styles
+│       │   └── modules/            # Feature modules by user role / function
+│       │       ├── leadership/     # Exec views, KPIs, high-level dashboards
+│       │       ├── program/        # Program-level dashboards & tools
+│       │       ├── member/         # Member/self-service pages
+│       │       └── admin/          # Admin tools, data quality, config UIs
+│       │
+│       ├── config/                 # App-local config (non-secret, repo-safe)
+│       │   ├── logging.yaml        # App logging config (references /home/.../data/logs)
+│       │   └── routes.yaml         # Optional: route/module registration metadata
+│       │
+│       ├── static/                 # Static assets (CSS, JS bundles, images)
+│       ├── templates/              # Jinja/HTML templates if you use them
+│       ├── tests/                  # Unit/integration tests
+│       ├── app.py                  # Main app entry point (FastAPI/Flask + Dash)
+│       ├── requirements.txt        # Python dependencies
+│       └── README.md
+├── bin
+├── config
+│   ├── app
+│   └── env
+│       └── uacc_db.env
+├── data
+│   ├── exports
+│   ├── logs
+│   │   ├── cron
+│   │   └── portal
+│   └── tmp
+├── envs
+│   └── portal-venv
+│       ├── bin
+│       ├── include
+│       ├── lib
+│       ├── lib64 -> lib
+│       └── pyvenv.cfg
+├── notebooks
+│   ├── experiments
+│   └── scratch
+├── scripts
+│   ├── cron
+│   ├── maintenance
+│   └── one_off
+└── server_directory_structure.txt
+
+26 directories, 6 files
