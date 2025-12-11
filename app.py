@@ -1,6 +1,7 @@
 import os
 from fastapi import FastAPI
 from fastapi.middleware.wsgi import WSGIMiddleware
+from fastapi.responses import HTMLResponse
 
 # Initialize logging first
 import backend.core.logging_config  # noqa: F401
@@ -63,9 +64,9 @@ app.include_router(
     tags=["admin"]
 )
 
-# Mount Dash app under /dash path
+# Mount Dash app under /adminupload path
 # Dash uses Flask (WSGI), so we need WSGIMiddleware to mount it
-app.mount("/dash", WSGIMiddleware(dash_app.server))
+app.mount("/adminupload", WSGIMiddleware(dash_app.server))
 
 
 @app.get("/health")
@@ -74,12 +75,105 @@ def health_check():
     return {"status": "ok", "environment": settings.APP_ENV}
 
 
+@app.get("/welcome", response_class=HTMLResponse)
+def welcome():
+    """Welcome page."""
+    return """
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Welcome to UACC Portal</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+                background: linear-gradient(135deg, #0C234B 0%, #1a3d6b 50%, #AB0520 100%);
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+            }
+            .container {
+                background: white;
+                border-radius: 12px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                padding: 60px 40px;
+                max-width: 600px;
+                width: 100%;
+                text-align: center;
+            }
+            h1 {
+                color: #0C234B;
+                margin-bottom: 20px;
+                font-size: 2.5em;
+                font-weight: 700;
+            }
+            .subtitle {
+                color: #666;
+                font-size: 1.2em;
+                margin-bottom: 40px;
+                line-height: 1.6;
+            }
+            .links {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                margin-top: 40px;
+            }
+            a {
+                display: inline-block;
+                padding: 15px 30px;
+                background: linear-gradient(135deg, #0C234B 0%, #AB0520 100%);
+                color: white;
+                text-decoration: none;
+                border-radius: 8px;
+                font-weight: 600;
+                transition: transform 0.2s, box-shadow 0.2s;
+            }
+            a:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 20px rgba(12, 35, 75, 0.5);
+            }
+            .footer {
+                margin-top: 40px;
+                color: #999;
+                font-size: 0.9em;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Welcome to UACC Portal</h1>
+            <p class="subtitle">
+                Internal modular web application for UACC metrics, dashboards, and tools.
+            </p>
+            <div class="links">
+                <a href="/adminupload">Admin Data Upload</a>
+                <a href="/docs">API Documentation</a>
+            </div>
+            <div class="footer">
+                <p>UACC Portal v1.0.0</p>
+            </div>
+        </div>
+    </body>
+    </html>
+    """
+
+
 @app.get("/")
 def root():
     """Root endpoint."""
     return {
         "message": "UACC portal is alive",
         "api_docs": "/docs",
-        "dash_app": "/dash"
+        "dash_app": "/adminupload",
+        "welcome": "/welcome"
     }
 
