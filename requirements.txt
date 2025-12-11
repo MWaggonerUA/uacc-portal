@@ -1,7 +1,7 @@
 # FastAPI and core dependencies
 annotated-types==0.7.0
 anyio==3.7.1
-click==8.3.1
+click==8.1.8
 fastapi==0.104.1
 h11==0.16.0
 httptools==0.7.1
