@@ -1,0 +1,322 @@
+|TABLE_NAME|COLUMN_NAME                            |DATA_TYPE|COLUMN_TYPE |IS_NULLABLE|COLUMN_KEY|ORDINAL_POSITION|
+|----------|---------------------------------------|---------|------------|-----------|----------|----------------|
+|budgets   |grant_id                               |varchar  |varchar(255)|YES        |          |1               |
+|budgets   |project_title                          |varchar  |varchar(255)|YES        |          |2               |
+|budgets   |grant_number                           |varchar  |varchar(255)|YES        |          |3               |
+|budgets   |core_project_number                    |varchar  |varchar(255)|YES        |          |4               |
+|budgets   |funding_source                         |varchar  |varchar(255)|YES        |          |5               |
+|budgets   |peer_review_type                       |varchar  |varchar(255)|YES        |          |6               |
+|budgets   |grant_start_date                       |date     |date        |YES        |          |7               |
+|budgets   |grant_end_date                         |date     |date        |YES        |          |8               |
+|budgets   |grant_direct_cost                      |float    |float       |YES        |          |9               |
+|budgets   |grant_indirect_cost                    |float    |float       |YES        |          |10              |
+|budgets   |grant_total                            |int      |int         |YES        |          |11              |
+|budgets   |prime_award_id                         |varchar  |varchar(255)|YES        |          |12              |
+|budgets   |prime_agency_name                      |varchar  |varchar(255)|YES        |          |13              |
+|budgets   |subcontract                            |int      |int         |YES        |          |14              |
+|budgets   |multi_pi                               |float    |float       |YES        |          |15              |
+|budgets   |multi_investigator                     |int      |int         |YES        |          |16              |
+|budgets   |nce                                    |int      |int         |YES        |          |17              |
+|budgets   |r01_like                               |int      |int         |YES        |          |18              |
+|budgets   |project_link                           |varchar  |varchar(255)|YES        |          |19              |
+|budgets   |allocation_of                          |varchar  |varchar(255)|YES        |          |20              |
+|budgets   |budget_period_id                       |float    |float       |YES        |          |21              |
+|budgets   |period_grant_number                    |varchar  |varchar(255)|YES        |          |22              |
+|budgets   |period                                 |float    |float       |YES        |          |23              |
+|budgets   |period_start_date                      |date     |date        |YES        |          |24              |
+|budgets   |period_end_date                        |date     |date        |YES        |          |25              |
+|budgets   |period_directs                         |float    |float       |YES        |          |26              |
+|budgets   |period_indirect                        |float    |float       |YES        |          |27              |
+|budgets   |period_total                           |int      |int         |YES        |          |28              |
+|budgets   |ccsg_fund                              |int      |int         |YES        |          |29              |
+|budgets   |linked_investigators                   |varchar  |varchar(255)|YES        |          |30              |
+|budgets   |research_programs                     |varchar  |varchar(255)|YES        |          |31              |
+|budgets   |cancer_relevance                       |float    |float       |YES        |          |32              |
+|budgets   |justification                          |varchar  |varchar(255)|YES        |          |33              |
+|budgets   |rlogx_uid                              |varchar  |varchar(255)|YES        |          |34              |
+|budgets   |flagged_for_review                     |int      |int         |YES        |          |35              |
+|budgets   |import_source                          |varchar  |varchar(255)|YES        |          |36              |
+|budgets   |workspace_status                       |varchar  |varchar(255)|YES        |          |37              |
+|budgets   |imported_pis                           |varchar  |varchar(255)|YES        |          |38              |
+|budgets   |imported_pi_ids                        |varchar  |varchar(255)|YES        |          |39              |
+|budgets   |last_updated                           |date     |date        |YES        |          |40              |
+|funding   |project_status                          |varchar  |varchar(255)|YES        |          |1               |
+|funding   |project_id                              |int      |int         |YES        |          |2               |
+|funding   |project_uid                             |varchar  |varchar(255)|YES        |          |3               |
+|funding   |fund_ws_id                               |int      |int         |YES        |          |4               |
+|funding   |fiscal_year                             |float    |float       |YES        |          |5               |
+|funding   |project_title                           |varchar  |varchar(255)|YES        |          |6               |
+|funding   |grant_number                            |varchar  |varchar(255)|YES        |          |7               |
+|funding   |fund_source                             |varchar  |varchar(255)|YES        |          |8               |
+|funding   |project_begin                           |date     |date        |YES        |          |9               |
+|funding   |project_end                             |date     |date        |YES        |          |10              |
+|funding   |project_status_id                        |int      |int         |YES        |          |11              |
+|funding   |project_summary                         |varchar  |varchar(255)|YES        |          |12              |
+|funding   |master_fund                             |int      |int         |YES        |          |13              |
+|funding   |allocation_of                           |float    |float       |YES        |          |14              |
+|funding   |training_project                        |int      |int         |YES        |          |15              |
+|funding   |indirect_cost                           |float    |float       |YES        |          |16              |
+|funding   |direct_cost                             |float    |float       |YES        |          |17              |
+|funding   |cancer_relevance_percentage              |float    |float       |YES        |          |18              |
+|funding   |peer_review_type_id                       |int      |int         |YES        |          |19              |
+|funding   |fund_review_status_id                     |int      |int         |YES        |          |20              |
+|funding   |batch_id                                |varchar  |varchar(255)|YES        |          |21              |
+|funding   |import_source                           |varchar  |varchar(255)|YES        |          |22              |
+|funding   |import_file                             |varchar  |varchar(255)|YES        |          |23              |
+|funding   |imported_pi                            |varchar  |varchar(255)|YES        |          |24              |
+|funding   |imported_pi_id                          |varchar  |varchar(255)|YES        |          |25              |
+|funding   |project_ts                              |varchar  |varchar(255)|YES        |          |26              |
+|funding   |is_subcontract                          |int      |int         |YES        |          |27              |
+|funding   |multi_pi                                |float    |float       |YES        |          |28              |
+|funding   |multi_investigator                      |int      |int         |YES        |          |29              |
+|funding   |no_cost_ext                              |int      |int         |YES        |          |30              |
+|funding   |r01_like                               |int      |int         |YES        |          |31              |
+|funding   |is_ccsg_fund                             |int      |int         |YES        |          |32              |
+|funding   |prime_award_id                           |varchar  |varchar(255)|YES        |          |33              |
+|funding   |prime_agency_name                        |varchar  |varchar(255)|YES        |          |34              |
+|funding   |funding_ic                              |text     |text        |YES        |          |35              |
+|funding   |restricted_funds                        |float    |float       |YES        |          |36              |
+|funding   |internal_project_id                      |varchar  |varchar(255)|YES        |          |37              |
+|funding   |project_sort                            |int      |int         |YES        |          |38              |
+|funding   |copied_from                             |text     |text        |YES        |          |39              |
+|funding   |inv_cancer_relevance_percentage          |text     |text        |YES        |          |40              |
+|funding   |inv_justification                      |varchar  |varchar(255)|YES        |          |41              |
+|funding   |inv_notes                              |varchar  |varchar(255)|YES        |          |42              |
+|funding   |inv_verified_by                         |text     |text        |YES        |          |43              |
+|funding   |inv_verified_ts                         |text     |text        |YES        |          |44              |
+|funding   |orig_project_id                          |text     |text        |YES        |          |45              |
+|funding   |is_core                                 |int      |int         |YES        |          |46              |
+|funding   |flag_for_review                         |int      |int         |YES        |          |47              |
+|funding   |core_project_num                         |varchar  |varchar(255)|YES        |          |48              |
+|funding   |project_url                             |varchar  |varchar(255)|YES        |          |49              |
+|funding   |is_supplement                           |float    |float       |YES        |          |50              |
+|funding   |include_in_roi                           |int      |int         |YES        |          |51              |
+|funding   |view_budget_begin                       |varchar  |varchar(255)|YES        |          |52              |
+|funding   |view_budget_end                         |varchar  |varchar(255)|YES        |          |53              |
+|funding   |unobligated_balance                     |float    |float       |YES        |          |54              |
+|funding   |fund_code                               |text     |text        |YES        |          |55              |
+|funding   |grant_type                              |varchar  |varchar(255)|YES        |          |56              |
+|funding   |grant_activity                          |text     |text        |YES        |          |57              |
+|funding   |is_clinical_trial                        |float    |float       |YES        |          |58              |
+|funding   |grant_purpose                           |text     |text        |YES        |          |59              |
+|funding   |public_health_relevance                  |varchar  |varchar(255)|YES        |          |60              |
+|funding   |modified_date                           |varchar  |varchar(255)|YES        |          |61              |
+|funding   |modified_by                             |float    |float       |YES        |          |62              |
+|funding   |peer_review_type                         |varchar  |varchar(255)|YES        |          |63              |
+|funding   |investigators                          |varchar  |varchar(255)|YES        |          |64              |
+|funding   |investigators_principal                |varchar  |varchar(255)|YES        |          |65              |
+|funding   |member_types                            |varchar  |varchar(255)|YES        |          |66              |
+|funding   |total_allocs                            |float    |float       |YES        |          |67              |
+|funding   |list_programs                           |varchar  |varchar(255)|YES        |          |68              |
+|funding   |this_count                              |float    |float       |YES        |          |69              |
+|funding   |investigators_other                    |text     |text        |YES        |          |70              |
+|funding   |total_budgets                           |float    |float       |YES        |          |71              |
+|funding   |subcontract_in_direct_cost              |text     |text        |YES        |          |72              |
+|funding   |subcontract_in_indirect_cost            |text     |text        |YES        |          |73              |
+|funding   |subcontract_out_direct_cost             |text     |text        |YES        |          |74              |
+|funding   |subcontract_out_indirect_cost           |text     |text        |YES        |          |75              |
+|ilabs     |user_login_email                       |varchar  |varchar(255)|YES        |          |1               |
+|ilabs     |pi_email                               |varchar  |varchar(255)|YES        |          |2               |
+|ilabs     |financial_contact_email                |varchar  |varchar(255)|YES        |          |3               |
+|ilabs     |service_id                             |varchar  |varchar(255)|YES        |          |4               |
+|ilabs     |service_type                           |varchar  |varchar(255)|YES        |          |5               |
+|ilabs     |asset_id                               |float    |float       |YES        |          |6               |
+|ilabs     |customer_name                          |varchar  |varchar(255)|YES        |          |7               |
+|ilabs     |customer_title                         |varchar  |varchar(255)|YES        |          |8               |
+|ilabs     |customer_lab                           |varchar  |varchar(255)|YES        |          |9               |
+|ilabs     |customer_department                    |varchar  |varchar(255)|YES        |          |10              |
+|ilabs     |customer_institute                     |varchar  |varchar(255)|YES        |          |11              |
+|ilabs     |charge_name                            |varchar  |varchar(255)|YES        |          |12              |
+|ilabs     |notes                                  |varchar  |varchar(255)|YES        |          |13              |
+|ilabs     |payment_information                    |varchar  |varchar(255)|YES        |          |14              |
+|ilabs     |custom_field                           |varchar  |varchar(255)|YES        |          |15              |
+|ilabs     |expense_object_code_revenue_object_code|varchar  |varchar(255)|YES        |          |16              |
+|ilabs     |account_subaccount                     |varchar  |varchar(255)|YES        |          |17              |
+|ilabs     |orgin_code                             |varchar  |varchar(255)|YES        |          |18              |
+|ilabs     |status                                 |varchar  |varchar(255)|YES        |          |19              |
+|ilabs     |billing_status                         |varchar  |varchar(255)|YES        |          |20              |
+|ilabs     |unit_of_measure                        |varchar  |varchar(255)|YES        |          |21              |
+|ilabs     |quantity                               |float    |float       |YES        |          |22              |
+|ilabs     |price                                  |float    |float       |YES        |          |23              |
+|ilabs     |conversion                             |float    |float       |YES        |          |24              |
+|ilabs     |updated_quantity                       |float    |float       |YES        |          |25              |
+|ilabs     |total_price                            |float    |float       |YES        |          |26              |
+|ilabs     |price_type                             |varchar  |varchar(255)|YES        |          |27              |
+|ilabs     |creation_date                          |datetime |datetime    |YES        |          |28              |
+|ilabs     |purchase_date                          |datetime |datetime    |YES        |          |29              |
+|ilabs     |completion_date                        |datetime |datetime    |YES        |          |30              |
+|ilabs     |billing_date                           |datetime |datetime    |YES        |          |31              |
+|ilabs     |date_file_sent_to_erp                  |datetime |datetime    |YES        |          |32              |
+|ilabs     |billing_event_end_date                 |datetime |datetime    |YES        |          |33              |
+|ilabs     |created_by                             |varchar  |varchar(255)|YES        |          |34              |
+|ilabs     |core_name                              |varchar  |varchar(255)|YES        |          |35              |
+|ilabs     |invoice_num                            |varchar  |varchar(255)|YES        |          |36              |
+|ilabs     |no_charge_justification                |varchar  |varchar(255)|YES        |          |37              |
+|ilabs     |ad_hoc_charge_justification            |text     |text        |YES        |          |38              |
+|ilabs     |organization_name                      |varchar  |varchar(255)|YES        |          |39              |
+|ilabs     |company_organization_name              |varchar  |varchar(255)|YES        |          |40              |
+|ilabs     |charge_id                              |float    |float       |YES        |          |41              |
+|ilabs     |reviewed                               |varchar  |varchar(255)|YES        |          |42              |
+|ilabs     |center                                 |varchar  |varchar(255)|YES        |          |43              |
+|ilabs     |category                               |varchar  |varchar(255)|YES        |          |44              |
+|ilabs     |usage_type                             |varchar  |varchar(255)|YES        |          |45              |
+|ilabs     |vendor                                 |text     |text        |YES        |          |46              |
+|ilabs     |unspsc_code                            |text     |text        |YES        |          |47              |
+|ilabs     |unspsc_name                            |text     |text        |YES        |          |48              |
+|ilabs     |facility_catalog_number                |text     |text        |YES        |          |49              |
+|ilabs     |central_catalog_number                 |varchar  |varchar(255)|YES        |          |50              |
+|ilabs     |core_id                                |float    |float       |YES        |          |51              |
+|ilabs     |ck_fund_type                           |varchar  |varchar(255)|YES        |          |52              |
+|ilabs     |final_status                           |varchar  |varchar(255)|YES        |          |53              |
+|ilabs     |billing_core                            |varchar  |varchar(255)|YES        |          |54              |
+|membership|member_status                          |varchar  |varchar(255)|YES        |          |1               |
+|membership|rlogx_id                                |int      |int         |YES        |          |2               |
+|membership|rlogx_uid                              |varchar  |varchar(255)|YES        |          |3               |
+|membership|internal_id                            |float    |float       |YES        |          |4               |
+|membership|last_name                              |varchar  |varchar(255)|YES        |          |5               |
+|membership|first_name                             |varchar  |varchar(255)|YES        |          |6               |
+|membership|middle_name                            |varchar  |varchar(255)|YES        |          |7               |
+|membership|credentials                            |varchar  |varchar(255)|YES        |          |8               |
+|membership|preferred_name                         |varchar  |varchar(255)|YES        |          |9               |
+|membership|maiden_name                            |varchar  |varchar(255)|YES        |          |10              |
+|membership|salutation                             |text     |text        |YES        |          |11              |
+|membership|suffix                                 |varchar  |varchar(255)|YES        |          |12              |
+|membership|email_address                          |varchar  |varchar(255)|YES        |          |13              |
+|membership|address                                |text     |text        |YES        |          |14              |
+|membership|phone                                  |text     |text        |YES        |          |15              |
+|membership|mobile                                 |text     |text        |YES        |          |16              |
+|membership|fax                                    |text     |text        |YES        |          |17              |
+|membership|orcid                                  |varchar  |varchar(255)|YES        |          |18              |
+|membership|author_names                           |varchar  |varchar(255)|YES        |          |19              |
+|membership|date_added_to_rlogx                    |date     |date        |YES        |          |20              |
+|membership|member_id                               |int      |int         |YES        |          |21              |
+|membership|ccm_type_code                            |text     |text        |YES        |          |22              |
+|membership|program_name                            |varchar  |varchar(255)|YES        |          |23              |
+|membership|research_interests                    |text     |text        |YES        |          |24              |
+|membership|campus                                 |text     |text        |YES        |          |25              |
+|membership|race                                   |varchar  |varchar(255)|YES        |          |26              |
+|membership|ethnicity                              |varchar  |varchar(255)|YES        |          |27              |
+|membership|gender                                 |varchar  |varchar(255)|YES        |          |28              |
+|membership|nih_reporter_id                        |varchar  |varchar(255)|YES        |          |29              |
+|membership|phone_number                           |text     |text        |YES        |          |30              |
+|membership   |fax_number                                         |text     |text        |YES        |          |31              |
+|membership   |ccsg_role                                          |text     |text        |YES        |          |32              |
+|membership   |nih_bibliography_url                               |varchar  |varchar(255)|YES        |          |33              |
+|membership   |ccm_start_date                                     |date     |date        |YES        |          |34              |
+|membership   |ccm_end_date                                       |date     |date        |YES        |          |35              |
+|membership   |current_research_programs                         |varchar  |varchar(255)|YES        |          |36              |
+|membership   |program_start_date                                 |date     |date        |YES        |          |37              |
+|membership   |program_end_date                                   |date     |date        |YES        |          |38              |
+|membership   |program_member_type                                |varchar  |varchar(255)|YES        |          |39              |
+|membership   |senior_leadership_title                            |varchar  |varchar(255)|YES        |          |40              |
+|membership   |program_history                                    |varchar  |varchar(255)|YES        |          |41              |
+|membership   |rank_primary_appointment                           |varchar  |varchar(255)|YES        |          |42              |
+|membership   |department_primary_appointment                     |varchar  |varchar(255)|YES        |          |43              |
+|membership   |division_primary_appointment                       |text     |text        |YES        |          |44              |
+|membership   |school_primary_appointment                         |varchar  |varchar(255)|YES        |          |45              |
+|membership   |rank_secondary_appointment                         |text     |text        |YES        |          |46              |
+|membership   |department_secondary_appointment                   |text     |text        |YES        |          |47              |
+|membership   |division_secondary_appointment                     |text     |text        |YES        |          |48              |
+|membership   |school_secondary_appointment                       |text     |text        |YES        |          |49              |
+|membership   |themes                                             |text     |text        |YES        |          |50              |
+|membership   |net_id                                              |varchar  |varchar(255)|YES        |          |51              |
+|membership   |four_year_term                                     |varchar  |varchar(255)|YES        |          |52              |
+|membership   |full                                               |varchar  |varchar(255)|YES        |          |53              |
+|membership   |associate                                          |varchar  |varchar(255)|YES        |          |54              |
+|membership   |last_first_name                                    |varchar  |varchar(255)|YES        |          |55              |
+|ontology_tags|entity_text                                        |text     |text        |YES        |          |1               |
+|ontology_tags|ncit_code                                          |text     |text        |YES        |          |2               |
+|ontology_tags|ncit_name                                          |text     |text        |YES        |          |3               |
+|ontology_tags|confidence                                         |double   |double      |YES        |          |4               |
+|ontology_tags|entity_type                                        |text     |text        |YES        |          |5               |
+|ontology_tags|entity_id                                          |varchar  |varchar(36) |YES        |          |6               |
+|ontology_tags|match_source                                       |text     |text        |YES        |          |7               |
+|ontology_tags|date_tagged                                        |text     |text        |YES        |          |8               |
+|proposals    |proposal_id                                        |int      |int         |YES        |          |1               |
+|proposals    |proposal_title                                     |varchar  |varchar(255)|YES        |          |2               |
+|proposals    |contact_role_description                           |varchar  |varchar(255)|YES        |          |3               |
+|proposals    |contact_role_code                                  |varchar  |varchar(255)|YES        |          |4               |
+|proposals    |total_effort                                       |float    |float       |YES        |          |5               |
+|proposals    |proposal_status                                    |varchar  |varchar(255)|YES        |          |6               |
+|proposals    |proposal_status_description                        |varchar  |varchar(255)|YES        |          |7               |
+|proposals    |multiple_pi_flag                                   |int      |int         |YES        |          |8               |
+|proposals    |submitted_date                                     |date     |date        |YES        |          |9               |
+|proposals    |lead_investigator_organization_name                |varchar  |varchar(255)|YES        |          |10              |
+|proposals    |lead_investigator_organization_code                |varchar  |varchar(255)|YES        |          |11              |
+|proposals    |lead_investigator_name                             |varchar  |varchar(255)|YES        |          |12              |
+|proposals    |requested_start_date                               |date     |date        |YES        |          |13              |
+|proposals    |requested_end_date                                 |date     |date        |YES        |          |14              |
+|proposals    |total_cost_by_investigator                         |float    |float       |YES        |          |15              |
+|proposals    |f_a_revenue_percentage_by_investigator_organization|float    |float       |YES        |          |16              |
+|proposals    |total_cost_by_investigator1                        |float    |float       |YES        |          |17              |
+|proposals    |indirect_cost_by_investigator_organization         |float    |float       |YES        |          |18              |
+|proposals    |direct_cost_by_investigator_organization           |float    |float       |YES        |          |19              |
+|proposals    |indirect_cost_by_investigator_organization1        |float    |float       |YES        |          |20              |
+|proposals    |investigator_name                                  |varchar  |varchar(255)|YES        |          |21              |
+|proposals    |organization_name                                  |varchar  |varchar(255)|YES        |          |22              |
+|proposals    |organization_code                                  |varchar  |varchar(255)|YES        |          |23              |
+|proposals    |sponsor_name                                       |varchar  |varchar(255)|YES        |          |24              |
+|proposals    |lead_investigator_organization_rollup_college_name |varchar  |varchar(255)|YES        |          |25              |
+|proposals    |college_name                                       |varchar  |varchar(255)|YES        |          |26              |
+|proposals    |college_code                                       |varchar  |varchar(255)|YES        |          |27              |
+|proposals    |college_name1                                      |varchar  |varchar(255)|YES        |          |28              |
+|proposals    |college_code1                                      |varchar  |varchar(255)|YES        |          |29              |
+|proposals    |total_cost                                         |float    |float       |YES        |          |30              |
+|publications |rlogx_link                                         |varchar  |varchar(255)|YES        |          |1               |
+|publications |pubmed_link                                        |varchar  |varchar(255)|YES        |          |2               |
+|publications |publication_id                                      |int      |int         |YES        |          |3               |
+|publications |publication_uid                                     |varchar  |varchar(255)|YES        |          |4               |
+|publications |pubmed_uid                                          |int      |int         |YES        |          |5               |
+|publications |title                                              |varchar  |varchar(255)|YES        |          |6               |
+|publications |authors                                            |varchar  |varchar(255)|YES        |          |7               |
+|publications |journal                                            |varchar  |varchar(255)|YES        |          |8               |
+|publications |journal_full                                       |varchar  |varchar(255)|YES        |          |9               |
+|publications |volume                                             |varchar  |varchar(255)|YES        |          |10              |
+|publications |issue                                              |varchar  |varchar(255)|YES        |          |11              |
+|publications |pages                                              |varchar  |varchar(255)|YES        |          |12              |
+|publications |pmc_id                                              |varchar  |varchar(255)|YES        |          |13              |
+|publications |nih_ms_id                                            |varchar  |varchar(255)|YES        |          |14              |
+|publications |doi                                                |varchar  |varchar(255)|YES        |          |15              |
+|publications |pub_date                                            |date     |date        |YES        |          |16              |
+|publications |pub_year                                            |int      |int         |YES        |          |17              |
+|publications |pubmed_date                                         |date     |date        |YES        |          |18              |
+|publications |e_pub_date                                           |varchar  |varchar(255)|YES        |          |19              |
+|publications |print_date                                          |varchar  |varchar(255)|YES        |          |20              |
+|publications |abstract                                           |varchar  |varchar(255)|YES        |          |21              |
+|publications |affiliations                                       |varchar  |varchar(255)|YES        |          |22              |
+|publications |grants                                             |varchar  |varchar(255)|YES        |          |23              |
+|publications |pub_type                                            |varchar  |varchar(255)|YES        |          |24              |
+|publications |pub_ts                                              |varchar  |varchar(255)|YES        |          |25              |
+|publications |pub_first_author                                     |varchar  |varchar(255)|YES        |          |26              |
+|publications |pub_last_author                                      |varchar  |varchar(255)|YES        |          |27              |
+|publications |import_date                                         |varchar  |varchar(255)|YES        |          |28              |
+|publications |issn                                               |varchar  |varchar(255)|YES        |          |29              |
+|publications |essn                                               |varchar  |varchar(255)|YES        |          |30              |
+|publications |cancer_relevance_justification                       |varchar  |varchar(255)|YES        |          |31              |
+|publications |nci_collaboration                                   |int      |int         |YES        |          |32              |
+|publications |peer_reviewed                                       |int      |int         |YES        |          |33              |
+|publications |cancer_relevant                                     |int      |int         |YES        |          |34              |
+|publications |external_collaboration                              |int      |int         |YES        |          |35              |
+|publications |impact_value                                        |float    |float       |YES        |          |36              |
+|publications |max_impact                                          |float    |float       |YES        |          |37              |
+|publications |min_impact                                          |float    |float       |YES        |          |38              |
+|publications |first_author_is_ccm                                   |int      |int         |YES        |          |39              |
+|publications |last_author_is_ccm                                    |int      |int         |YES        |          |40              |
+|publications |all_ccm_authors_possible_names                        |varchar  |varchar(255)|YES        |          |41              |
+|publications |all_ccm_authors                                      |varchar  |varchar(255)|YES        |          |42              |
+|publications |intraprogrammatic                                  |int      |int         |YES        |          |43              |
+|publications |identify_intra_authors                              |varchar  |varchar(255)|YES        |          |44              |
+|publications |intra_authors                                       |varchar  |varchar(255)|YES        |          |45              |
+|publications |nci_cc_collaboration                               |int      |int         |YES        |          |46              |
+|publications |identified_cancer_centers                         |varchar  |varchar(255)|YES        |          |47              |
+|publications |interprogrammatic                                  |int      |int         |YES        |          |48              |
+|publications |identify_inter_authors                              |varchar  |varchar(255)|YES        |          |49              |
+|publications |inter_authors                                       |varchar  |varchar(255)|YES        |          |50              |
+|publications |inter_programs                                      |varchar  |varchar(255)|YES        |          |51              |
+|publications |leader_reviewed                                     |text     |text        |YES        |          |52              |
+|publications |both_in_trainter                                     |varchar  |varchar(255)|YES        |          |53              |
+|publications |research_programs                                   |varchar  |varchar(255)|YES        |          |54              |
+|publications |author_verification                                 |varchar  |varchar(255)|YES        |          |55              |
+|publications |cores_used                                          |varchar  |varchar(255)|YES        |          |56              |
+|publications |citation                                           |varchar  |varchar(255)|YES        |          |57              |
+|publications |research_program                                   |varchar  |varchar(255)|YES        |          |58              |

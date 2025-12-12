@@ -64,7 +64,14 @@ async def init_db():
     """
     async with engine.begin() as conn:
         # Import all models here so they're registered with Base
-        # from backend.models.orm_models import YourModel  # Uncomment when you add ORM models
+        from backend.models.orm_models import (
+            BudgetRecord,
+            FundingRecord,
+            ILabsRecord,
+            MembershipRecord,
+            ProposalRecord,
+            PublicationRecord,
+        )
         await conn.run_sync(Base.metadata.create_all)
 
 

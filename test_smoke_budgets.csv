@@ -1,0 +1,5 @@
+Project Title,Peer Review Type,Grant Start Date,Grant End Date,RLOGX UID,Import Source,Workspace Status,Last Updated,Grant Number,Core Project Number,Period Grant Number,Grant ID,Period Start Date,Period End Date,Grant Direct Cost,Grant Indirect Cost,Research Program(s)
+Smoke Test Project 1,Type A,2020-01-15,2024-12-31,SMOKE001,Test Source,Active,2024-01-01,GRANT001,CORE001,PERIOD001,G001,2020-01-01,2020-12-31,100000.0,50000.0,Program A
+Smoke Test Project 2,Type B,01/15/2021,12/31/2025,SMOKE002,Test Source,Active,2024-02-01,,CORE002,PERIOD002,G002,2021-01-01,2021-12-31,200000.0,100000.0,Program B
+Smoke Test Project 3,Type C,2022 Mar 11,2025-12-31,SMOKE003,Test Source,Inactive,,,PERIOD003,G003,2022-01-01,2022-12-31,300000.0,150000.0,Program C
+

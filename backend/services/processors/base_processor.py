@@ -5,6 +5,7 @@ All dataset-specific processors inherit from this class and implement
 dataset-specific validation, transformation, and database write logic.
 """
 import logging
+import re
 from abc import ABC, abstractmethod
 from typing import List, Dict, Any, Tuple
 import pandas as pd
@@ -144,6 +145,132 @@ class BaseDatasetProcessor(ABC):
                 row_dict[key] = value.strip()
         
         return row_dict
+    
+    def _map_column_names(self, column_name: str) -> str:
+        """
+        Convert processor column names to database column names (snake_case).
+        
+        Converts column names with spaces, camelCase, mixed case, and special characters
+        to snake_case format suitable for database column names.
+        
+        Handles:
+        - Spaces: 'Project Title' → 'project_title'
+        - camelCase: 'rlogxID' → 'rlogx_id', 'projectID' → 'project_id'
+        - Mixed case: 'RLOGX UID' → 'rlogx_uid'
+        - Parentheses: 'Research Program(s)' → 'research_programs', 'Rank (Primary Appointment)' → 'rank_primary_appointment'
+        - Special characters: 'F&A' → 'f_a', 'Expense Object Code|Revenue Object Code' → 'expense_object_code_revenue_object_code'
+        - Hyphens: 'Ad-hoc' → 'ad_hoc'
+        - Multiple capitals: 'allCCMAuthors' → 'all_ccm_authors'
+        - Already snake_case: 'pub_date' → 'pub_date'
+        
+        Examples:
+            'Project Title' → 'project_title'
+            'RLOGX UID' → 'rlogx_uid'
+            'Grant Start Date' → 'grant_start_date'
+            'rlogxID' → 'rlogx_id'
+            'memberID' → 'member_id'
+            'publicationID' → 'publication_id'
+            'Research Program(s)' → 'research_programs'
+            'Rank (Primary Appointment)' → 'rank_primary_appointment'
+            'F&A Revenue Percentage' → 'f_a_revenue_percentage'
+            'Expense Object Code|Revenue Object Code' → 'expense_object_code_revenue_object_code'
+            'Ad-hoc Charge Justification' → 'ad_hoc_charge_justification'
+            'allCCMAuthors' → 'all_ccm_authors'
+        
+        Args:
+            column_name: Original column name (may contain spaces, camelCase, mixed case, special chars)
+            
+        Returns:
+            Column name in snake_case format
+        """
+        if not column_name:
+            return column_name
+        
+        # Convert to string and strip whitespace
+        name = str(column_name).strip()
+        
+        # Handle special parentheses patterns first
+        # '(s)' is a plural indicator - replace with 's' directly
+        # 'Research Program(s)' → 'Research Programs' → 'research_programs'
+        name = re.sub(r'\(s\)', 's', name, flags=re.IGNORECASE)
+        
+        # Handle other parentheses: replace with space to keep content
+        # 'Rank (Primary Appointment)' → 'Rank Primary Appointment' → 'rank_primary_appointment'
+        name = re.sub(r'[()]', ' ', name)
+        
+        # Replace special characters with underscores before processing
+        # Handle hyphens, pipes, ampersands, and other non-alphanumeric chars (except underscores)
+        name = re.sub(r'[^\w\s]', '_', name)  # Replace non-word, non-space chars with underscore
+        
+        # Replace spaces and other whitespace with underscores
+        name = '_'.join(name.split())
+        
+        # Handle sequences of multiple capital letters followed by lowercase
+        # This handles cases like 'allCCMAuthors' → 'all_CCM_Authors'
+        # Pattern: lowercase/digit, then 2+ capitals, then capital+lowercase
+        name = re.sub(r'(?<=[a-z0-9_])([A-Z]{2,})(?=[A-Z][a-z])', r'_\1_', name)
+        
+        # Handle camelCase: insert underscore before capital letters that follow lowercase or digits
+        # This handles cases like:
+        # - 'rlogxID' → 'rlogx_ID' → 'rlogx_id'
+        # - 'subcontract_in_directCost' → 'subcontract_in_direct_Cost' → 'subcontract_in_direct_cost'
+        # - 'fundWSID' → 'fund_WSID' → but we need special handling for all-caps sequences
+        name = re.sub(r'(?<=[a-z0-9])(?=[A-Z])', '_', name)
+        
+        # Handle all-caps abbreviations that should be split
+        # 'fundWSID' → 'fund_WSID' → we need 'fund_WS_ID'
+        # Pattern: word boundary before 2+ capitals at end or before another capital+lowercase
+        # Actually, let's handle sequences of 2+ capitals that aren't already separated
+        # 'WSID' should become 'WS_ID' if followed by nothing or underscore, but 'WS' if part of a word
+        # For 'fundWSID', we want 'fund_WS_ID'
+        # Let's insert underscore between consecutive capitals where the second starts a new "word"
+        # This is tricky - let's handle it by looking for patterns like XXXX where we want X_XX or XX_XX
+        # Actually, for abbreviations like 'WSID', 'CCM', we might want to keep them together
+        # But 'fundWSID' should be 'fund_WS_ID' based on the expected output
+        # Handle all-caps abbreviations: only split if they follow lowercase (camelCase context)
+        # 'fundWSID' → 'fund_WSID' → 'fund_WS_ID' (split because it follows lowercase)
+        # 'RLOGX UID' → 'RLOGX_UID' stays together (standalone acronym, no split)
+        # Pattern: lowercase/underscore, then exactly 4 capitals → split into 2+2
+        # This only splits abbreviations that are part of camelCase, not standalone words
+        name = re.sub(r'(?<=[a-z_])([A-Z]{2})([A-Z]{2})(?![A-Za-z])', r'\1_\2', name)
+        
+        # Handle sequences of multiple capital letters followed by lowercase
+        # This ensures 'CCMAuthors' becomes 'CCM_Authors' (then lowercase makes it 'ccm_authors')
+        # But we need to be careful not to break single capitals at word boundaries
+        # Actually, the above regex should handle this, but let's also handle cases where
+        # we have multiple capitals in a row that should be treated as one unit
+        # For example: 'CCM' should stay together, but 'CCMAuthors' should become 'CCM_Authors'
+        # The regex above should handle this correctly
+        
+        # Convert to lowercase
+        name = name.lower()
+        
+        # Remove any consecutive underscores
+        while '__' in name:
+            name = name.replace('__', '_')
+        
+        # Remove leading/trailing underscores
+        name = name.strip('_')
+        
+        return name
+    
+    def transform_rows(self, valid_rows: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """
+        Transform validated rows before database insertion.
+        
+        Override in subclasses for dataset-specific transformations:
+        - Date format standardization
+        - Missing value filling
+        - Computed columns
+        - Column name mapping (processor names → database names)
+        
+        Args:
+            valid_rows: List of validated row dictionaries
+            
+        Returns:
+            List of transformed row dictionaries ready for database insertion
+        """
+        return valid_rows
     
     def validate_dataframe(self, df: pd.DataFrame) -> Tuple[List[Dict[str, Any]], List[UploadError]]:
         """

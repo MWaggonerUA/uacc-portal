@@ -14,7 +14,7 @@ import asyncio
 import logging
 from datetime import datetime
 from pathlib import Path
-from typing import List, Dict, Any, Tuple, Optional
+from typing import List, Dict, Any, Tuple, Optional, Union
 import pandas as pd
 from fastapi import UploadFile
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -56,18 +56,20 @@ class UploadService:
         logger.debug(f"Saved uploaded file: {saved_path}")
         return saved_path
     
-    def parse_file(self, file_path: Path) -> Tuple[List[pd.DataFrame], str, Optional[str]]:
+    def parse_file(self, file_path: Path) -> Tuple[List[Union[pd.DataFrame, Tuple[str, pd.DataFrame]]], str, Optional[str]]:
         """
         Parse CSV or Excel file into pandas DataFrame(s).
         
-        For iLabs Excel files with multiple tabs, returns multiple DataFrames.
+        For iLabs Excel files with multiple tabs, returns multiple DataFrames with sheet names.
         For other files, returns a single DataFrame in a list.
         
         Args:
             file_path: Path to the file
             
         Returns:
-            Tuple of (list_of_dataframes, file_type, dataset_type_hint)
+            Tuple of (list_of_dataframes_or_tuples, file_type, dataset_type_hint)
+            For iLabs: list contains (sheet_name, DataFrame) tuples
+            For others: list contains DataFrames
             dataset_type_hint is 'ilabs' if Excel with multiple tabs, None otherwise
         """
         file_extension = file_path.suffix.lower()
@@ -87,7 +89,8 @@ class UploadService:
                 for sheet_name in excel_file.sheet_names:
                     df = pd.read_excel(excel_file, sheet_name=sheet_name)
                     if not df.empty:
-                        dataframes.append(df)
+                        # Store as tuple (sheet_name, DataFrame) for iLabs
+                        dataframes.append((sheet_name, df))
                 logger.info(f"Parsed iLabs Excel file with {len(dataframes)} tabs")
             else:
                 # Single tab - regular Excel file
@@ -143,7 +146,19 @@ class UploadService:
                     logger.info(f"Using dataset hint '{dataset_hint}' to select processor")
                     dataset_type = dataset_hint
             
-            for df_idx, df in enumerate(dataframes):
+            for df_idx, df_item in enumerate(dataframes):
+                # Handle iLabs files: df_item is a tuple (sheet_name, DataFrame)
+                # For other files: df_item is just a DataFrame
+                if isinstance(df_item, tuple):
+                    sheet_name, df = df_item
+                else:
+                    sheet_name = None
+                    df = df_item
+                
+                # Set sheet name for iLabs processor if applicable
+                if processor and hasattr(processor, 'set_sheet_name') and sheet_name:
+                    processor.set_sheet_name(sheet_name)
+                
                 # Use hint-based processor if available, otherwise auto-detect
                 if not processor:
                     processor = get_processor_for_dataframe(df)
@@ -172,6 +187,10 @@ class UploadService:
                 # Validate using processor
                 valid_rows, errors = processor.validate_dataframe(df)
                 
+                # Transform validated rows before database insertion
+                if valid_rows:
+                    valid_rows = processor.transform_rows(valid_rows)
+                
                 # Adjust row numbers in errors to be unique across tabs
                 # Create new error objects with offset row numbers
                 adjusted_errors = []
@@ -191,11 +210,20 @@ class UploadService:
                 # Write to database if session provided
                 if db_session and valid_rows:
                     try:
-                        inserted_count = await processor.write_to_database(
-                            valid_rows=valid_rows,
-                            db_session=db_session,
-                            upload_timestamp=upload_timestamp
-                        )
+                        # Prepare write parameters
+                        write_params = {
+                            'valid_rows': valid_rows,
+                            'db_session': db_session,
+                            'upload_timestamp': upload_timestamp,
+                            'source_filename': file.filename,
+                            'upload_batch_id': None  # TODO: Generate batch IDs for tracking related uploads
+                        }
+                        
+                        # For iLabs, add source_tab_name
+                        if hasattr(processor, 'current_sheet_name') and sheet_name:
+                            write_params['source_tab_name'] = sheet_name
+                        
+                        inserted_count = await processor.write_to_database(**write_params)
                         logger.info(f"Inserted {inserted_count} rows into database for {dataset_type}")
                     except Exception as e:
                         logger.error(f"Error writing to database: {e}", exc_info=True)
