@@ -262,10 +262,66 @@ The application automatically loads configuration from:
 - `~/config/env/uacc_db.env` (server deployment)
 - Environment variables (highest priority)
 
-Make sure your server configuration file exists and has the correct settings:
+### Database Configuration
+
+**IMPORTANT:** The application requires a database configuration file to connect to MySQL.
+
+Create the configuration file on the server:
+
+```bash
+mkdir -p ~/config/env
+nano ~/config/env/uacc_db.env
+```
+
+Add the following (adjust values for your MySQL setup):
+
+```bash
+DB_HOST=localhost
+DB_PORT=3306
+DB_NAME=uacc_db
+DB_USER=your_mysql_username
+DB_PASSWORD=your_mysql_password
+APP_ENV=production
+```
+
+**Note:** If MySQL is running on a different server, use that server's hostname or IP address instead of `localhost`.
+
+Verify the configuration file exists and has correct settings:
 
 ```bash
 cat ~/config/env/uacc_db.env
+```
+
+### Troubleshooting Database Connection Issues
+
+If you encounter database connection errors:
+
+1. **Run the diagnostic script:**
+   ```bash
+   cd ~/apps/uacc-portal
+   source ~/envs/portal-venv/bin/activate
+   python scripts/diagnose_db_connection.py
+   ```
+
+2. **Check MySQL is running:**
+   ```bash
+   sudo systemctl status mysql
+   # or
+   sudo systemctl status mariadb
+   ```
+
+3. **Test MySQL connection manually:**
+   ```bash
+   mysql -h localhost -P 3306 -u your_username -p your_database
+   ```
+
+4. **See detailed troubleshooting guide:**
+   - `DB_CONNECTION_TROUBLESHOOTING.md` in the project root
+
+After updating the configuration file, restart the service:
+
+```bash
+sudo systemctl restart uacc-portal.service
 ```
 
 ## Post-Deployment Checklist
@@ -273,10 +329,13 @@ cat ~/config/env/uacc_db.env
 - [ ] Code pushed to GitHub
 - [ ] Code pulled on server
 - [ ] Dependencies updated (if needed)
+- [ ] **Database configuration file created** (`~/config/env/uacc_db.env`)
+- [ ] **Database connection tested** (run `python scripts/diagnose_db_connection.py`)
 - [ ] Service restarted
 - [ ] Service status verified (active/running)
 - [ ] Health check endpoint responds correctly
 - [ ] Application endpoints tested
+- [ ] **File upload and database write tested** (upload page with `write_to_db=true`)
 - [ ] Logs checked for errors
 - [ ] Domain accessible (if configured by UA Cloud team)
 
