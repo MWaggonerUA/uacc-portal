@@ -271,8 +271,8 @@ class ExcelReportGenerator:
         # Summary sheet
         ws = wb[self.summary_sheet_name]
         num_source_files = len(summary_data.get("source_files", []))
-        # Header row: 1 + 8 (fixed) + num_source_files + 2 (blank + "Sheet Details") = 11 + num_source_files
-        header_row = 11 + num_source_files
+        # Column names row: 9 (fixed) + num_source_files + 2 (blank + "Sheet Details") + 1 = 12 + num_source_files
+        header_row = 12 + num_source_files
         num_sheet_rows = len(summary_data.get("sheets", []))
         last_table_row = header_row + num_sheet_rows
 
