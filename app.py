@@ -2,22 +2,38 @@ import os
 from fastapi import FastAPI
 from fastapi.middleware.wsgi import WSGIMiddleware
 from fastapi.responses import HTMLResponse
+import dash
+import dash_bootstrap_components as dbc
 
 # Initialize logging first
 import backend.core.logging_config  # noqa: F401
 
 # Import routers
 from backend.api.admin_uploads import router as admin_uploads_router
+from backend.api.clinical_trials import router as clinical_trials_router
 
 # Import database initialization
 from backend.services.db import init_db, close_db
 
-# Import Dash app
+# Import Dash app for admin uploads
 from frontend.core.app import dash_app
 from frontend.modules.admin.upload_page import upload_layout
 
+# Import Clinical Trials Dash layout
+from frontend.modules.clinical_trials.upload_page import clinical_trials_layout
+
 # Import configuration
 from backend.core.config import settings
+
+# Create separate Dash app for Clinical Trials
+# Each Dash app needs its own instance with unique prefix
+clinical_trials_dash_app = dash.Dash(
+    __name__,
+    suppress_callback_exceptions=True,
+    external_stylesheets=[dbc.themes.BOOTSTRAP],
+    routes_pathname_prefix='/',
+    requests_pathname_prefix='/clinicaltrialsupload/'
+)
 
 app = FastAPI(
     title="UACC Portal",
@@ -41,8 +57,10 @@ async def startup_event():
     # await init_db()
     
     # Set the layout for the admin upload page
-    # In the future, you can add routing logic here to switch between different module layouts
     dash_app.layout = upload_layout
+    
+    # Set the layout for the clinical trials upload page
+    clinical_trials_dash_app.layout = clinical_trials_layout
     
     print(f"UACC Portal started in {settings.APP_ENV} mode")
     print(f"Temporary file directory: {settings.TEMP_DIR}")
@@ -64,9 +82,16 @@ app.include_router(
     tags=["admin"]
 )
 
-# Mount Dash app under /adminupload path
-# Dash uses Flask (WSGI), so we need WSGIMiddleware to mount it
+app.include_router(
+    clinical_trials_router,
+    prefix="/clinical-trials",
+    tags=["clinical-trials"]
+)
+
+# Mount Dash apps under their respective paths
+# Dash uses Flask (WSGI), so we need WSGIMiddleware to mount them
 app.mount("/adminupload", WSGIMiddleware(dash_app.server))
+app.mount("/clinicaltrialsupload", WSGIMiddleware(clinical_trials_dash_app.server))
 
 
 @app.get("/health")
@@ -156,6 +181,7 @@ def welcome():
             </p>
             <div class="links">
                 <a href="/adminupload">Admin Data Upload</a>
+                <a href="/clinicaltrialsupload">Clinical Trials Data Upload</a>
                 <a href="/docs">API Documentation</a>
             </div>
             <div class="footer">
@@ -173,7 +199,8 @@ def root():
     return {
         "message": "UACC portal is alive",
         "api_docs": "/docs",
-        "dash_app": "/adminupload",
+        "admin_upload": "/adminupload",
+        "clinical_trials_upload": "/clinicaltrialsupload",
         "welcome": "/welcome"
     }
 

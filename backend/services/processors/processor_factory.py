@@ -101,6 +101,12 @@ def _register_all_processors():
         register_processor("ilabs", ILabsProcessor)
     except ImportError:
         logger.debug("iLabs processor not yet implemented")
+    
+    try:
+        from backend.services.processors.banner_billings_processor import BannerBillingsProcessor
+        register_processor("banner_billings", BannerBillingsProcessor)
+    except ImportError:
+        logger.debug("Banner Billings processor not yet implemented")
 
 
 # Auto-register processors on import
